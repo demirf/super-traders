@@ -13,9 +13,6 @@ export class User {
   @Column({ unique: true, length: 50 })
   username: string;
 
-  @Column()
-  password: string;
-
   @OneToMany(() => Portfolio, portfolio => portfolio.user)
   portfolios: Portfolio[];
 
