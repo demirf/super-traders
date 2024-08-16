@@ -1,19 +1,21 @@
 import { StockService } from "../services/StockService";
 import { UserService } from "../services/UserService";
 import {AppDataSource} from "../config";
+import {PortfolioService} from "../services/PortfolioService";
 
 async function seedDatabase() {
   await AppDataSource.initialize()
     .then(async () => {
       const stockService = new StockService();
       const userService = new UserService();
+      const portfolioService = new PortfolioService();
 
       const stocks = [
-        { symbol: "EVA", name: "EVA Inc.", price: 1200.00 },
-        { symbol: "DMR", name: "Demir Corp.", price: 900.00 },
-        { symbol: "APL", name: "Apple Inc.", price: 400.00 },
-        { symbol: "AMZ", name: "Amazon.com Inc.", price: 3500.00 },
-        { symbol: "TSL", name: "Tesla Inc.", price: 800.00 }
+        { symbol: "EVA", name: "EVA Inc.", price: 1200.00, quantity: 100 },
+        { symbol: "DMR", name: "Demir Corp.", price: 900.00, quantity: 100 },
+        { symbol: "APL", name: "Apple Inc.", price: 400.00, quantity: 100 },
+        { symbol: "AMZ", name: "Amazon.com Inc.", price: 3500.00, quantity: 100 },
+        { symbol: "TSL", name: "Tesla Inc.", price: 800.00, quantity: 100 }
       ];
 
       for (const stockData of stocks) {
@@ -29,7 +31,9 @@ async function seedDatabase() {
       ];
 
       for (const userData of users) {
-        await userService.createUser(userData);
+        const user = await userService.createUser(userData);
+
+        await portfolioService.createPortfolio(user);
       }
 
       console.log('Database seeded successfully!');

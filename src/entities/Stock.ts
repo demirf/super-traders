@@ -1,5 +1,5 @@
-import {Entity, PrimaryColumn, Column, UpdateDateColumn, OneToMany} from "typeorm";
-import {Transaction} from "./Transaction";
+import { Entity, PrimaryColumn, Column, UpdateDateColumn, OneToMany } from "typeorm";
+import { Transaction } from "./Transaction";
 
 const tableName = 'stocks';
 
@@ -15,6 +15,9 @@ export class Stock {
 
   @Column('decimal', { scale: 2 })
   price: number;
+
+  @Column('decimal')
+  quantity: number;
 
   @OneToMany(() => Transaction, transaction => transaction.stock)
   transactions: Transaction[];
