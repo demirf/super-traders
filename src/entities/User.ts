@@ -3,7 +3,7 @@ import { Portfolio } from "./Portfolio";
 
 const tableName = 'users';
 
-@Entity()
+@Entity(tableName)
 export class User {
   static tableName = tableName;
 

@@ -7,7 +7,8 @@
     "dev": "ts-node-dev src/index.ts",
     "typeorm": "typeorm",
     "migrate:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run -d src/config.ts",
-    "migrate:revert": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:revert -d src/config.ts"
+    "migrate:revert": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:revert -d src/config.ts",
+    "seed": "ts-node src/seed"
   },
   "author": "",
   "license": "ISC",

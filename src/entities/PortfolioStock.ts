@@ -4,7 +4,7 @@ import { Stock } from "./Stock";
 
 const tableName = 'portfolio_stocks';
 
-@Entity()
+@Entity(tableName)
 export class PortfolioStock {
   static tableName = tableName;
 

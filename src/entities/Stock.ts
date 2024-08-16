@@ -3,7 +3,7 @@ import {Transaction} from "./Transaction";
 
 const tableName = 'stocks';
 
-@Entity()
+@Entity(tableName)
 export class Stock {
   static tableName = tableName;
 
