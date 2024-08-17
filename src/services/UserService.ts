@@ -1,6 +1,6 @@
-import {Repository} from "typeorm";
+import { Repository } from "typeorm";
 import { User } from "../entities/User";
-import {AppDataSource} from "../config";
+import { AppDataSource } from "../config";
 
 export class UserService {
   private userRepository: Repository<User>

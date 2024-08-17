@@ -1,6 +1,6 @@
 import { appEventEmitter } from './eventEmitter';
 import { TransactionService } from "../services/TransactionService";
-import {TransactionType} from "../enums";
+import { TransactionType } from "../enums";
 
 appEventEmitter.on('trade', async (stock, portfolio, quantity, transactionType: TransactionType) => {
   try {

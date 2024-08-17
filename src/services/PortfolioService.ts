@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
-import {AppDataSource} from "../config";
-import {Portfolio} from "../entities/Portfolio";
-import {User} from "../entities/User";
+import { AppDataSource } from "../config";
+import { Portfolio } from "../entities/Portfolio";
+import { User } from "../entities/User";
 
 export class PortfolioService {
   private portfolioRepository: Repository<Portfolio>;

@@ -9,6 +9,10 @@ export class StockService {
     this.stockRepository = AppDataSource.getRepository(Stock);
   }
 
+  async findAll() {
+    return this.stockRepository.find();
+  }
+
   async createStock(stockData: { symbol: string; name: string; price: number, quantity: number})  {
     const stock = this.stockRepository.create(stockData);
     await this.stockRepository.save(stock);
@@ -33,6 +37,10 @@ export class StockService {
     const stock = await this.stockRepository.findOneBy({ symbol });
     stock.quantity = quantityChange;
 
+    await this.stockRepository.save(stock);
+  }
+
+  async update(stock: Stock) {
     await this.stockRepository.save(stock);
   }
 }

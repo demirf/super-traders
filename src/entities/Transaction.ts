@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn} from "typeorm";
-import {Stock} from "./Stock";
-import {Portfolio} from "./Portfolio";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from "typeorm";
+import { Stock } from "./Stock";
+import { Portfolio } from "./Portfolio";
 
 const tableName = 'transactions';
 

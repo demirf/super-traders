@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
-import {AppDataSource} from "../config";
-import {PortfolioStock} from "../entities/PortfolioStock";
+import { AppDataSource } from "../config";
+import { PortfolioStock } from "../entities/PortfolioStock";
 
 export class PortfolioStockService {
   private portfolioStockRepository: Repository<PortfolioStock>;

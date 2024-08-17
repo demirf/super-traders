@@ -1,7 +1,7 @@
 import { StockService } from "../services/StockService";
 import { UserService } from "../services/UserService";
-import {AppDataSource} from "../config";
-import {PortfolioService} from "../services/PortfolioService";
+import { AppDataSource } from "../config";
+import { PortfolioService } from "../services/PortfolioService";
 
 async function seedDatabase() {
   await AppDataSource.initialize()

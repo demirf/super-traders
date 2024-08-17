@@ -1,8 +1,8 @@
 import { StockService } from './StockService';
 import { PortfolioStockService } from "./PortfolioStockService";
 import { PortfolioService } from "./PortfolioService";
-import {appEventEmitter} from "../events/eventEmitter";
-import {TransactionType} from "../enums";
+import { appEventEmitter } from "../events/eventEmitter";
+import { TransactionType } from "../enums";
 
 // It's aggregate service that uses StockService, PortfolioService, and PortfolioStockService
 export class TradeService {
