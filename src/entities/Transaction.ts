@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn} from "typeorm";
-import { Stock } from "./Stock";
+import {Stock} from "./Stock";
+import {Portfolio} from "./Portfolio";
 
 const tableName = 'transactions';
 
@@ -14,14 +15,15 @@ export class Transaction {
   @JoinColumn({ name: "stockSymbol" })
   stock: Stock;
 
-  @Column()
-  stockSymbol: string;
+  @ManyToOne(() => Portfolio)
+  @JoinColumn({ name: "portfolioId" })
+  portfolio: Portfolio;
 
   @Column('int')
   quantity: number;
 
   @Column()
-  transactionType: string;  // 'buy' veya 'sell'
+  transactionType: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   transactionDate: Date;
