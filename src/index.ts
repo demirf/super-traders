@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { AppDataSource } from './config';
 import tradeRoutes from "./routes/trade.routes";
+import './events/handlers';
 
 const app = express();
 const port = process.env.PORT || 3000;

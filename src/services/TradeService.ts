@@ -1,20 +1,19 @@
 import { StockService } from './StockService';
 import { PortfolioStockService } from "./PortfolioStockService";
 import { PortfolioService } from "./PortfolioService";
-import {TransactionService} from "./TransactionService";
+import {appEventEmitter} from "../events/eventEmitter";
+import {TransactionType} from "../enums";
 
-// It's aggregate service that uses StockService, PortfolioService, PortfolioStockService, and TransactionService
+// It's aggregate service that uses StockService, PortfolioService, and PortfolioStockService
 export class TradeService {
   private stockService: StockService;
   private portfolioService: PortfolioService;
   private portfolioStockService: PortfolioStockService
-  private transactionService: TransactionService;
 
   constructor() {
     this.stockService = new StockService();
     this.portfolioService = new PortfolioService();
     this.portfolioStockService = new PortfolioStockService();
-    this.transactionService = new TransactionService();
   }
 
   async buyStock(portfolioId: number, stockSymbol: string, quantity: number) {
@@ -30,7 +29,9 @@ export class TradeService {
     // Update the portfolio with the new stock purchase
     await this.portfolioStockService.addStockToPortfolio(portfolioId, stockSymbol, quantity, stock.price);
 
-    await this.transactionService.createTransaction(stock, portfolio, quantity, 'buy');
+    // Create a transaction for the stock purchase
+    appEventEmitter.emit('trade', stock, portfolio, quantity, TransactionType.Buy);
+
     return {
       message: "Stock purchased successfully",
       transactionDetails: {
@@ -54,7 +55,8 @@ export class TradeService {
     const currentPrice = await this.stockService.getCurrentPrice(stockSymbol);
     await this.portfolioStockService.updateStockInPortfolio(portfolioId, stockSymbol, -quantity);
 
-    await this.transactionService.createTransaction(stock, portfolio, quantity, 'sell');
+    // Create a transaction for the stock sale
+    appEventEmitter.emit('trade', stock, portfolio, quantity, TransactionType.Sell);
 
     return {
       message: "Stock sold successfully",
