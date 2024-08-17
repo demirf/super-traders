@@ -3,7 +3,7 @@ import { PortfolioStockService } from "./PortfolioStockService";
 import { PortfolioService } from "./PortfolioService";
 import {TransactionService} from "./TransactionService";
 
-// It's aggregate service that uses StockService, PortfolioService and PortfolioStockService
+// It's aggregate service that uses StockService, PortfolioService, PortfolioStockService, and TransactionService
 export class TradeService {
   private stockService: StockService;
   private portfolioService: PortfolioService;
@@ -18,17 +18,10 @@ export class TradeService {
   }
 
   async buyStock(portfolioId: number, stockSymbol: string, quantity: number) {
-    const stock = await this.stockService.findStockBySymbol(stockSymbol);
+    const { stock, portfolio } = await this.checkStockAndPortfolio(portfolioId, stockSymbol);
 
-    if (!stock) {
-      throw new Error("Stock not registered.");
-    } else if (stock.quantity < quantity) {
+    if (stock.quantity < quantity) {
       throw new Error("Insufficient stock quantity available.");
-    }
-
-    const portfolio = await this.portfolioService.getPortfolioById(portfolioId);
-    if (!portfolio) {
-      throw new Error("Portfolio not registered.");
     }
 
     // Decrease the stock quantity in the Stocks table
@@ -49,15 +42,7 @@ export class TradeService {
   }
 
   async sellStock(portfolioId: number, stockSymbol: string, quantity: number) {
-    const stock = await this.stockService.findStockBySymbol(stockSymbol);
-    if (!stock) {
-      throw new Error("Stock not registered.");
-    }
-
-    const portfolio = await this.portfolioService.getPortfolioById(portfolioId);
-    if (!portfolio) {
-      throw new Error("Portfolio not registered.");
-    }
+    const { stock, portfolio } = await this.checkStockAndPortfolio(portfolioId, stockSymbol);
 
     const portfolioStock = await this.portfolioStockService.findPortfolioStock(portfolioId, stockSymbol);
     if (!portfolioStock || portfolioStock.quantity < quantity) {
@@ -78,6 +63,24 @@ export class TradeService {
         quantity,
         transactionRevenue: currentPrice * quantity
       }
+    };
+  }
+
+  async checkStockAndPortfolio(portfolioId: number, stockSymbol: string) {
+    const stock = await this.stockService.findStockBySymbol(stockSymbol);
+
+    if (!stock) {
+      throw new Error("Stock not registered.");
+    }
+
+    const portfolio = await this.portfolioService.getPortfolioById(portfolioId);
+    if (!portfolio) {
+      throw new Error("Portfolio not registered.");
+    }
+
+    return {
+      stock,
+      portfolio,
     };
   }
 }
