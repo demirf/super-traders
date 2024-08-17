@@ -12,15 +12,12 @@ export class TransactionService {
   }
 
   async getTotalBuyTransactions(stockSymbol: string) {
-    console.log('Stock Symbol:', stockSymbol)
     const response = await this.transactionRepository.createQueryBuilder("transaction")
       .select("SUM(transaction.quantity)", "total")
       .where("transaction.stockSymbol = :symbol", { symbol: stockSymbol })
       .andWhere("transaction.transactionType = 'BUY'")
       .andWhere("transaction.transactionDate > :date", { date: new Date(Date.now() - 3600 * 1000) })
       .getRawOne();
-
-    console.log('Response:', response)
 
     return response;
   }
